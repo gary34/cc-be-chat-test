@@ -1,3 +1,5 @@
+国内访问github很慢，可以访问国内仓库 https://gitee.com/gary34/cc-be-chat-test
+
 ### 运行
 
 运行前请确保在本机安装有redis 并监听6379端口，mongodb 并监听27017端口，zookeeper 2181 端口
