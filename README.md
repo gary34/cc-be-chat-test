@@ -97,25 +97,26 @@ npm 6.13.7
 
 ```javascript
 const handlerMap = {
-login: loginHandler,
-chat: chatHandler,
-leaderConnect: leaderConnectHandler,
-syncServers: syncServerHandler,
-userInfo: userInfoHandler,
-joinRoom: joinRoomHandler,
-popular: popularHandler,
+    login: loginHandler,
+    chat: chatHandler,
+    leaderConnect: leaderConnectHandler,
+    syncServers: syncServerHandler,
+    userInfo: userInfoHandler,
+    joinRoom: joinRoomHandler,
+    popular: popularHandler,
 };
 
 const clientHandler = new Handler(handlerMap, defaultHandler);
 
 clientConnection.on("message", function (message) {
-const {action, data} = decodePackage(message);
-const args = {
-connection: clientConnection,
-data: data,
-};
-clientHandler.getHandler().dispatch(action, args);
-});
+        logger.Info("receive: " + message);
+        const {action, data} = decodePackage(message);
+        const args = {
+            connection: clientConnection,
+            data: data,
+        };
+        clientHandler.getHandler().dispatch(action, args);
+    });
 ```
 
 
