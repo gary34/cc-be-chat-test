@@ -149,30 +149,30 @@ clientConnection.on("message", function (message) {
 
 ```javascript
 const handleUserChat = (args) => {
-const {connection, data} = args;
-const {from = '', to = '', roomName = '', ts = 0, message = '', format = 'text'} = data;
-session.findGlobal(to, (user) => {
-const clusterInfo = cluster.getInfo();
-if (!user || !user.isOnline) {
-if (roomName.length === 0) {
-sendMsg(protocol.newErrorResp(404, "user " + to + " is not on line"), connection);
-}
-return;
-}
-if (user.isLocal) {
-const newMessage = dirtyWord.filter(message);
-history.recordHst(data);
-sendMsg(protocol.newChatResp({from, roomName, ts, message: newMessage, format}), user.connection);
-return;
-}
-if (clusterInfo.isLeader) {
-sendToNode(user.nodeId, protocol.newChatRQ({from, to, ts, roomName, message, format}));
-} else {
-//forward to leader
-sendMsg(protocol.newChatRQ({from, to, roomName, ts, message, format}), cluster.getLeader().connection);
-}
-}
-);
+    const {connection, data} = args;
+    const {from = '', to = '', roomName = '', ts = 0, message = '', format = 'text'} = data;
+    session.findGlobal(to, (user) => {
+            const clusterInfo = cluster.getInfo();
+            if (!user || !user.isOnline) {
+                if (roomName.length === 0) {
+                    sendToUser(protocol.newErrorResp(404, "user " + to + " is not on line"), {connection});
+                }
+                return;
+            }
+            if (user.isLocal) {
+                const newMessage = dirtyWord.filter(message);
+                history.recordHst(data);
+                sendToUser(protocol.newChatResp({from, roomName, ts, message: newMessage, format}), user);
+                return;
+            }
+            if (clusterInfo.isLeader) {
+                sendToNode(user.nodeId, protocol.newChatRQ({from, to, ts, roomName, message, format}));
+            } else {
+                //forward to leader
+                sendToLeader(protocol.newChatRQ({from, to, roomName, ts, message, format}));
+            }
+        }
+    );
 };
 ```
 

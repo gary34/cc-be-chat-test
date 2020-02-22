@@ -99,7 +99,6 @@ const handleUserChat = (args) => {
             if (user.isLocal) {
                 const newMessage = dirtyWord.filter(message);
                 history.recordHst(data);
-                // sendMsg(protocol.newChatResp({from, roomName, ts, message: newMessage, format}), user.connection);
                 sendToUser(protocol.newChatResp({from, roomName, ts, message: newMessage, format}), user);
                 return;
             }
@@ -108,7 +107,6 @@ const handleUserChat = (args) => {
             } else {
                 //forward to leader
                 sendToLeader(protocol.newChatRQ({from, to, roomName, ts, message, format}));
-                // sendMsg(protocol.newChatRQ({from, to, roomName, ts, message, format}), cluster.getLeader().connection);
             }
         }
     );
