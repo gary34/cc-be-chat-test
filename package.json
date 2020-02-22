@@ -1,14 +1,36 @@
 {
-  "name": "cli",
+  "name": "cc-bechat-test",
   "version": "1.0.0",
-  "description": "cli",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js",
+    "client": "node src/client.js",
+    "gateway": "node src/gateway.js",
+    "seed": "node src/seed.js",
+    "test": "ava"
   },
-  "author": "Theodore",
+  "ava": {
+    "files": [
+      "src/**/*.test.js"
+    ],
+    "timeout": "5m"
+  },
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "inquirer": "^6.2.0"
+    "ava": "^3.3.0",
+    "colors": "^1.4.0",
+    "inquirer": "^7.0.4",
+    "mongodb": "^3.5.3",
+    "node-zookeeper-client": "^1.1.0",
+    "pm2": "^4.2.3",
+    "redis": "^3.0.2",
+    "request": "^2.88.2",
+    "ws": "^7.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0"
   }
 }
